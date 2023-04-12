@@ -43,9 +43,10 @@ func (p *Parser) Optional(name string, nvar Narg) {
 	})
 }
 
-func (p *Parser) Parse() (Vals, error) {
-	cmd := os.Args
-	fmt.Println(cmd)
-
+func (p *Parser) parse(osArgs []string) (Vals, error) {
 	return nil, fmt.Errorf("not implemented")
+}
+
+func (p *Parser) Parse() (Vals, error) {
+	return p.parse(os.Args)
 }
