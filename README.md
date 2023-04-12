@@ -2,11 +2,11 @@
 
 A simple command line parser.
 
-## Inclusion
+### Inclusion
 
-## Module structure
+### Module structure
 
-## Algorithm
+### Algorithm
 
 A command line provided by os.Args can look like the following:
 ```
