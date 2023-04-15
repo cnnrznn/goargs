@@ -24,10 +24,8 @@ type Parser struct {
 }
 
 func (p *Parser) Contains(key string) bool {
-	if _, ok := p.args[key]; ok {
-		return true
-	}
-	return false
+	_, ok := p.args[key]
+	return ok
 }
 
 func New() *Parser {
@@ -76,6 +74,19 @@ func (p *Parser) parse(args []string) (Vals, error) {
 	for key := range p.args {
 		if !vals.Contains(key) && p.args[key].required {
 			return nil, fmt.Errorf("missing required arg %v", key)
+		}
+	}
+
+	for key, val := range vals {
+		switch p.args[key].nvar {
+		case Zero:
+			if len(val) > 0 {
+				return nil, fmt.Errorf("%v has values when it shouldn't", key)
+			}
+		case One:
+			if len(val) != 1 {
+				return nil, fmt.Errorf("%v does not have exactly one value", key)
+			}
 		}
 	}
 

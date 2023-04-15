@@ -1,6 +1,8 @@
 package goargs
 
 import (
+	"fmt"
+	"strings"
 	"testing"
 )
 
@@ -33,9 +35,35 @@ func TestFlagArgs(t *testing.T) {
 }
 
 func TestVariaticArgs(t *testing.T) {
-	t.Error("Not implemented")
+	p := New()
+	p.Required("--myList", Many)
+	p.Required("-f", Zero)
+	p.Required("--flag", Zero)
+
+	vals, err := p.parse(strings.Split("-f --myList one two three --flag", " "))
+	if err != nil {
+		t.Error(err)
+	}
+
+	if len(vals["--myList"]) != 3 {
+		t.Error(fmt.Errorf("expected three args"))
+	}
 }
 
 func TestMixedArgs(t *testing.T) {
-	t.Error("Not implemented")
+	p := New()
+	p.Required("--files", Many)
+	p.Required("--name", One)
+
+	vals, err := p.parse(strings.Split("--files one.txt two.txt index.html --name Connor", " "))
+	if err != nil {
+		t.Error(err)
+	}
+
+	if len(vals["--files"]) != 3 {
+		t.Error(fmt.Errorf("incorrect number of 'files' args"))
+	}
+	if len(vals["--name"]) != 1 {
+		t.Error(fmt.Errorf("name expecting exactly one value"))
+	}
 }
