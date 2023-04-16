@@ -4,8 +4,6 @@ A simple command line parser.
 
 ### Inclusion
 
-### Module structure
-
 ### Algorithm
 
 A command line provided by os.Args can look like the following:
@@ -22,3 +20,9 @@ The algorithm is roughly the following:
 3. Separate the slice into sub-slices where each sub-slice begins with a flag token: `-flagName` or `--flag`.
 4. Sub slices look like `[--flag argOne argTwo argN]`.
 5. For each sub-slice, populate the relevant entry in `Vals` struct.
+
+### Philosophy
+
+This module was built with the acknowledgement that there are not a ton of features here.
+The algorithm is simple and does not cover any edge cases. It has a simple option set and only returns values in strings.
+It is up to the user of the lib to do input validation.
